@@ -1,0 +1,26 @@
+:root {
+  --dark-purple: #1F0318;
+  --nyanza: #E5F2C9;
+  --bole: #7F534B; 
+  --chamoisee: #8C705F;
+  --raisin-black: #1E1A1D;
+}
+
+body {
+  background-color: var(--nyanza);
+}
+
+header {
+  background-color: var(--dark-purple);
+}
+
+header h1 {
+  background-color: var(--nyanza);
+  color: var(--raisin-black);
+  box-shadow: 5px 5px 0px 0px var(--chamoisee);
+}
+
+nav a {
+  text-decoration: none;
+  color: var(--nyanza);
+}
