@@ -1,17 +1,46 @@
 <!-- Loop over each object in the blogs array -->
 {{#each blogs as |blog| }}
-<div class="row mb-4 blog">
-  <div class="col-md-5">
-    <h2>
-      <!-- Call helper function with triple brackets to render the emoji span as HTML -->
-      <a href="/blog/{{blog.id}}">{{blog.title}}</a>
-    </h2>
-    <p>Created by {{blog.user.name}} on {{format_date blog.date_created}}</p>
+  <div class="blog card mt-4 mx-4" data-id="{{blog.id}}">
+    <div class="blog-header d-flex justify-content-between p-2 m-0">
+      <h5 class="m-0">
+        {{#if ../logged_in}} {{!-- this worked --}}
+        <a href="/blog/{{blog.id}}">{{blog.title}}</a>
+        {{else}}
+        <a href="/login" class="me-4">{{blog.title}}</a> 
+        {{/if}}
+      </h5>
+      <p class="m-0">Posted by {{blog.user.name}} on {{format_date blog.date_created}}</p>
+    </div>
+    <p class="blog-content p-3 m-0">{{blog.content}}</p>
   </div>
-  <div class="col-md-7">
-    <p>
-      {{blog.content}}
-    </p>
+
+  {{!-- comments  --}}
+    <div class="col comment-div m-3" data-id="{{post.id}}">
+  {{!-- add a comment  --}}
+    <div class="card m-4 custom-background">
+      <div class="card-body p-4">
+        {{!-- if user is logged in, show comment form.  otherwise tell them again to log in  --}}
+          {{!-- {{#if ../logged_in}} --}}
+            <div class="mb-3">
+              <label for="comment{{post.id}}" class="form-label">Add a Comment</label>
+              <textarea class="form-control" id="comment{{post.id}}" rows="3"></textarea>
+              <button class="btn custom-button m-2 submit-comment" data-user-id="{{../userId}}" data-id="{{post.id}}">Submit</button>
+            </div>
+          {{!-- {{else}}
+          <h6> <a href="/login" class="text-primary-emphasis text-decoration-none">Log in</a> to add a comment!</h6>
+          {{/if}} --}}
+        </div>
+    </div>
+{{!-- display comments  --}}
+    {{#if ../comments}}
+    {{#each ../comments as |comment|}}
+      <div class="card m-3 custom-background" data-id="{{comment.id}}">
+      <div class="card-body p-4">
+        <p class="card-text">{{comment.content}}</p>
+        <p class="card-text"><small class="text-body-secondary"> Posted by: {{comment.user.name}} on {{ format_date comment.date_created}} </small></p>
+      </div>
+    </div>
+    {{/each}}
+    {{/if}}
   </div>
-</div>
 {{/each}}

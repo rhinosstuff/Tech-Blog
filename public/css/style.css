@@ -1,26 +1,38 @@
 :root {
-  --dark-purple: #1F0318;
-  --nyanza: #E5F2C9;
-  --bole: #7F534B; 
-  --chamoisee: #8C705F;
-  --raisin-black: #1E1A1D;
+  --dark: #0D1821;
+  --mid: #8D818C;
+  --light: #DFF8EB;
 }
 
 body {
-  background-color: var(--nyanza);
+  background-color: var(--light);
 }
 
 header {
-  background-color: var(--dark-purple);
+  background-color: var(--dark);
 }
 
 header h1 {
-  background-color: var(--nyanza);
-  color: var(--raisin-black);
-  box-shadow: 5px 5px 0px 0px var(--chamoisee);
+  background-color: var(--light);
+  color: var(--dark);
+  box-shadow: 5px 5px 0px 0px var(--mid);
 }
 
 nav a {
   text-decoration: none;
-  color: var(--nyanza);
+  color: var(--light);
+}
+
+.blog {
+  border: 3px solid var(--dark);
+}
+
+.blog-header {
+  color: var(--mid);
+  background-color: var(--dark);
+}
+
+.blog-header a {
+  text-decoration: none;
+  color: var(--mid);
 }
