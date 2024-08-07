@@ -5,42 +5,25 @@
       <h5 class="m-0">{{blog.title}}</h5>
       <p class="m-0">Posted by: {{blog.user.name}} on {{format_date blog.date_created}}</p>
     </div>
-    <p class="blog-content p-3 m-0">{{blog.content}}</p>
+    <p class="blog-content d-none p-3 m-0" data-id="{{blog.id}}">{{blog.content}}</p>
   </div>
 
   {{!-- comments  --}}
-  <div class="comment-container d-none m-3" data-id="{{blog.id}}">
-    {{!-- add a comment  --}}
-    <div class="comment-form card m-4">
-      <div class="card-body p-4"> 
-        {{!-- if user is logged in, show comment form.  otherwise tell them again to log in  --}}
-        {{#if ../logged_in}}
-          <div class="mb-3">
-            <label for="comment-{{blog.id}}" class="form-label">Add a Comment</label>
-            <textarea class="form-control" id="comment-{{blog.id}}" rows="3"></textarea>
-            <button class="btn custom-button m-2 submit-comment" data-user-id="{{blog.user_id}}" data-id="{{blog.id}}">Submit</button>
-          </div>
-        {{else}}
-          <h6> <a href="/login" class="text-decoration-none">Log in to add a comment!</a></h6>
-        {{/if}}
-      </div>
-    </div>
+  <div class="comment-container d-flex flex-column align-items-center d-none m-3" data-id="{{blog.id}}">
+    <button class="add-comment btn btn-secondary w-25" data-id="{{blog.id}}" data-user-id="{{blog.user_id}}">+Comment</button>
 
     {{!-- display comments  --}}
-    {{#if ../comments}}
-      {{#each ../comments as |comment|}}
-        {{#if (eq comment.blog_id ../id)}}
-          <div class="card m-3 custom-background" data-id="{{comment.id}}">
-            <div class="card-body p-4">
-              <p class="card-text">{{comment.content}}</p>
-              <p class="card-text"><small class="text-body-secondary"> Posted by: {{comment.user.name}} on {{ format_date comment.date_created}} </small></p>
-            </div>
+    {{#each ../comments as |comment|}}
+      {{#if (eq comment.blog_id ../id)}}
+        <div class="card m-3 w-75" data-id="{{comment.id}}">
+          <div class="card-body p-4">
+            <p class="card-text">{{comment.content}}</p>
+            <p class="card-text">
+              <small> -{{comment.user.name}}, {{ format_date comment.date_created}} </small>
+            </p>
           </div>
-        {{/if}}
-      {{/each}}
-    {{/if}}
+        </div>
+      {{/if}}
+    {{/each}}
   </div>
 {{/each}}
-
-<script src="./js/blogs.js"></script>
-<script src="./js/comments.js"></script>

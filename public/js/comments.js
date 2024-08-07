@@ -1,19 +1,31 @@
-const toggleComments = (id) => {
-  //toggle corresponding comment div by data attribute that matches id
-  const comments = document.querySelector(`.comment-container[data-id="${id}"]`);
+const toggleViewBlog = (blogId) => {
+  // toggle corresponding comment div by data attribute that matches id
+  const blogContent = document.querySelector(`.blog-content[data-id="${blogId}"]`);
+  const comments = document.querySelector(`.comment-container[data-id="${blogId}"]`);
+  
+  if (blogContent) {
+    blogContent.classList.toggle('d-none');
+  }
+
   if (comments) {
     comments.classList.toggle('d-none');
-    comments.scrollIntoView({
-      behavior: 'smooth',
-      block: 'center',
-      inline: 'nearest'
-    });
-  } 
+  }
 };
 
-//fetch request to add a comment
+// fetch request to add a comment
 const newCommentHandler = async (blogId, userId) => {
-  const comment = document.querySelector(`#comment-${blogId}`).value.trim();
+  const { value: text } = await Swal.fire({
+    input: "textarea",
+    inputLabel: "Please Leave a Comment",
+    inputPlaceholder: "Type your comment here...",
+    inputAttributes: {
+      "aria-label": "Type your comment here"
+    },
+    showCancelButton: true
+  });
+
+  const comment = text
+  // const comment = document.querySelector(`#comment-${blogId}`).value.trim();
   if (comment) {
       try {
           const response = await fetch('/api/comments', {
@@ -33,18 +45,21 @@ const newCommentHandler = async (blogId, userId) => {
   }
 };
 
-//listen for a click inside a .blog-card element and get the data-id of the blog
+// listen for a click inside a .blog-card element and get the data-id of the blog
 document.addEventListener('click', function(event) {
   const blogCard = event.target.closest('.blog-card');
   if (blogCard) {
-    const blogId = blogCard.getAttribute('data-id');
-    toggleComments(blogId);
+    if (isLoggedIn) {
+      const blogId = blogCard.getAttribute('data-id');
+      toggleViewBlog(blogId);
+    } else {
+      document.location.replace('/login');
+    }
   }
 });
 
-// Delegate event listener for the submit comment buttons
 document.addEventListener('click', function(event) {
-  if (event.target.classList.contains('submit-comment')) {
+  if (event.target.classList.contains('add-comment')) {
     const blogId = event.target.getAttribute('data-id');
     const userId = event.target.getAttribute('data-user-id');
     newCommentHandler(blogId, userId);

@@ -19,6 +19,10 @@ header h1 {
   box-shadow: 5px 5px 0px 0px var(--mid);
 }
 
+nav {
+  height: 30px;
+}
+
 nav a {
   text-decoration: none;
   color: var(--light);
