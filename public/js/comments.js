@@ -1,26 +1,29 @@
 const toggleComments = (id) => {
   //toggle corresponding comment div by data attribute that matches id
-  const comments = document.querySelector(`.comment-div[data-id="${id}"]`);
+  const comments = document.querySelector(`.comment-container[data-id="${id}"]`);
   if (comments) {
-      comments.classList.toggle('d-none');
+    comments.classList.toggle('d-none');
+    comments.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center',
+      inline: 'nearest'
+    });
   } 
-  comments.scrollIntoView({ behavior: 'smooth' });
 };
 
 //fetch request to add a comment
-const handleAddComment = async (id, userId) => {
-  const user = userId;
-  const comment = document.querySelector(`#comment${id}`).value.trim();
-  if (comment && user) {
+const newCommentHandler = async (blogId, userId) => {
+  const comment = document.querySelector(`#comment-${blogId}`).value.trim();
+  if (comment) {
       try {
           const response = await fetch('/api/comments', {
               method: 'POST',
-              body: JSON.stringify({ content: comment, post_id: id, author_id: user }),
+              body: JSON.stringify({ content: comment, blog_id: blogId, user_id: userId }),
               headers: { 'Content-Type': 'application/json', },
           });
           
           if (response.ok) {
-              document.location.replace(`/post/${id}`);
+              document.location.replace(`/`);
           } else {
               console.error("there's been an error");
           }
@@ -30,20 +33,20 @@ const handleAddComment = async (id, userId) => {
   }
 };
 
-//listen for a click inside a .blog element and get the data-id of the blog
+//listen for a click inside a .blog-card element and get the data-id of the blog
 document.addEventListener('click', function(event) {
-  const blog = event.target.closest('.blog');
-  if (blog) {
-      const blogId = blog.getAttribute('data-id');
-      toggleComments(blogId);
+  const blogCard = event.target.closest('.blog-card');
+  if (blogCard) {
+    const blogId = blogCard.getAttribute('data-id');
+    toggleComments(blogId);
   }
 });
 
-//event listener to submit comment
-document.querySelectorAll('.submit-comment').forEach(button => {
-  button.addEventListener('click', function(event) {
-      const postId= event.target.getAttribute('data-id');
-      const userId = event.target.getAttribute('data-user-id');
-      handleAddComment(postId, userId);
-  })
+// Delegate event listener for the submit comment buttons
+document.addEventListener('click', function(event) {
+  if (event.target.classList.contains('submit-comment')) {
+    const blogId = event.target.getAttribute('data-id');
+    const userId = event.target.getAttribute('data-user-id');
+    newCommentHandler(blogId, userId);
+  }
 });

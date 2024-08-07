@@ -6,6 +6,7 @@
 
 body {
   background-color: var(--light);
+  color: var(--dark);
 }
 
 header {
@@ -23,8 +24,9 @@ nav a {
   color: var(--light);
 }
 
-.blog {
+.blog-card {
   border: 3px solid var(--dark);
+  cursor: pointer;
 }
 
 .blog-header {
