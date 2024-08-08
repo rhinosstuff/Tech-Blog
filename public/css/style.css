@@ -5,8 +5,18 @@
 }
 
 body {
+  min-width: 350px;
   background-color: var(--light);
   color: var(--dark);
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Roboto Slab", sans-serif;
+  font-weight: 300;
+  font-style: normal;
 }
 
 header {
@@ -28,17 +38,60 @@ nav a {
   color: var(--light);
 }
 
+.add-blog-btn {
+  width: 200px;
+}
+
 .blog-card {
   border: 3px solid var(--dark);
   cursor: pointer;
 }
 
 .blog-header {
-  color: var(--mid);
   background-color: var(--dark);
+  color: var(--mid);
 }
 
-.blog-header a {
-  text-decoration: none;
+.blog-header:hover {
+  color: var(--light);
+}
+
+.blog-header h5 {
+  margin: 0;
+}
+
+.add-comment-btn {
+  width: 200px;
+}
+
+.swal-input {
+  border-color: var(--light);
+  border-width: 2px;
+  border-style: solid;
+}
+
+.swal-input:focus {
+  outline: none;
+  border-color: var(--mid);
+  box-shadow: 0 0 5px var(--mid);
+}
+
+.swal-confirm-btn {
+  background-color: var(--light);
   color: var(--mid);
+}
+
+.swal-confirm-btn:hover {
+  background-color: var(--dark);
+  color: var(--light);
+}
+
+@media (width <= 700px)  {
+  .blog-header {
+    flex-direction: column;
+  }
+
+  .blog-header h5 {
+    margin-bottom: 15px;
+  }
 }

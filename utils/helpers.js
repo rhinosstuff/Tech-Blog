@@ -5,5 +5,8 @@ module.exports = {
   },
   eq: (a, b) => {
     return a === b;
+  },
+  has_comments: (blogId, comments) => {
+    return comments.some(comment => comment.blog_id === blogId);
   }
 };

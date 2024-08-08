@@ -1,42 +1,47 @@
-<div class="row">
-  <div class="col-auto">
-    <h2>Welcome, {{name}}!</h2>
-  </div>
+<div class="d-flex flex-column align-items-center">
+  <h2 class="text-center m-3">Welcome, {{name}}!</h2>
+  <button class="add-blog-btn btn btn-secondary" data-user-id="{{id}}">+Blog</button>
 </div>
 
-<div class="row mt-4">
-  <div class="col-md-6">
-    <h3>Create a New Blog:</h3>
+{{#if blogs.length}}
+  {{!-- display blogs  --}}
+  {{#each blogs as |blog|}}
+    <div class="container d-flex flex-column">
+      <div class="blog-card card mt-4 mx-4" data-id="{{blog.id}}">
+        <div class="blog-header d-flex justify-content-between p-2 m-0">
+          <h5>{{blog.title}}</h5>
+          <p class="m-0">Posted on: {{format_date blog.date_created}}</p>
+        </div>
+        <p class="blog-content d-none p-3 m-0" data-id="{{blog.id}}">{{blog.content}}</p>
+      </div>
 
-    <form class="form new-blog-form">
-      <div class="form-group">
-        <label for="blog-title">blog title:</label>
-        <input class="form-input" type="text" id="blog-title" name="blog-title" />
-      </div>
-      <div class="form-group">
-        <label for="blog-content">content:</label>
-        <textarea class="form-input" id="blog-content" name="blog-content"></textarea>
-      </div>
-      <div class="form-group">
-        <button type="submit" class="btn btn-primary">Create</button>
-      </div>
-    </form>
-  </div>
-
-  {{#if blogs.length}}
-  <div class="col-md-6 blog-list">
-    <h3>Current Blogs:</h3>
-
-    {{#each blogs as |blog|}}
-    <div class="row mb-2">
-      <div class="col-md-8">
-        <h4><a href="/blog/{{blog.id}}">{{blog.title}}</a></h4>
-      </div>
-      <div class="col-md-4">
-        <button class="btn btn-sm btn-danger" data-id="{{blog.id}}">DELETE</button>
+      <div class="blog-btn-options d-none mt-3 ms-4" data-id="{{blog.id}}">
+        <button class="edit-blog-btn btn btn-warning me-2" data-id="{{blog.id}}">Edit</button>
+        <button class="del-blog-btn btn btn-danger me-2" data-id="{{blog.id}}">Delete</button>
+        {{#if (has_comments blog.id ../comments)}}
+          <button class="view-comments-btn btn btn-secondary" data-id="{{blog.id}}">View Comments</button>
+        {{/if}}
       </div>
     </div>
-    {{/each}}
-  </div>
-  {{/if}}
-</div>
+    
+      
+
+    {{!-- display comments  --}}
+    {{#if (has_comments blog.id ../comments)}}
+      <div class="comment-container d-flex flex-column align-items-center d-none m-3" data-id="{{blog.id}}">
+        {{#each ../comments as |comment|}}
+          {{#if (eq comment.blog_id ../id)}}
+            <div class="card mt-3 w-75" data-id="{{comment.id}}">
+              <div class="card-body p-4">
+                <p class="card-text">{{comment.content}}</p>
+                <p class="card-text">
+                  <small> ~{{comment.user.name}}, {{ format_date comment.date_created}} </small>
+                </p>
+              </div>
+            </div>
+          {{/if}}
+        {{/each}}
+      </div>
+    {{/if}}
+  {{/each}}
+{{/if}}

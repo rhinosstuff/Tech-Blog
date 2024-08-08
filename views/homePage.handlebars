@@ -1,29 +1,38 @@
-<!-- Loop over each object in the blogs array -->
-{{#each blogs as |blog|}}
-  <div class="blog-card card mt-4 mx-4" data-id="{{blog.id}}">
-    <div class="blog-header d-flex justify-content-between p-2 m-0">
-      <h5 class="m-0">{{blog.title}}</h5>
-      <p class="m-0">Posted by: {{blog.user.name}} on {{format_date blog.date_created}}</p>
+{{#if blogs.length}}
+  {{!-- display blogs  --}}
+  {{#each blogs as |blog|}}
+    <div class="container d-flex flex-column">
+      <div class="blog-card card mt-4 mx-4" data-id="{{blog.id}}">
+        <div class="blog-header d-flex justify-content-between p-2 m-0">
+          <h5>{{blog.title}}</h5>
+          <p class="m-0">Posted by: {{blog.user.name}} on {{format_date blog.date_created}}</p>
+        </div>
+        <p class="blog-content d-none p-3 m-0" data-id="{{blog.id}}">{{blog.content}}</p>
+      </div>
+      <div class="blog-btn-options d-none mt-3 ms-4" data-id="{{blog.id}}">
+        <button class="add-comment-btn btn btn-secondary me-2" data-id="{{blog.id}}" data-user-id="{{blog.user_id}}">+Comment</button>
+        {{#if (has_comments blog.id ../comments)}}
+          <button class="view-comments-btn btn btn-secondary" data-id="{{blog.id}}">View Comments</button>
+        {{/if}}
+      </div>
     </div>
-    <p class="blog-content d-none p-3 m-0" data-id="{{blog.id}}">{{blog.content}}</p>
-  </div>
-
-  {{!-- comments  --}}
-  <div class="comment-container d-flex flex-column align-items-center d-none m-3" data-id="{{blog.id}}">
-    <button class="add-comment btn btn-secondary w-25" data-id="{{blog.id}}" data-user-id="{{blog.user_id}}">+Comment</button>
 
     {{!-- display comments  --}}
-    {{#each ../comments as |comment|}}
-      {{#if (eq comment.blog_id ../id)}}
-        <div class="card m-3 w-75" data-id="{{comment.id}}">
-          <div class="card-body p-4">
-            <p class="card-text">{{comment.content}}</p>
-            <p class="card-text">
-              <small> -{{comment.user.name}}, {{ format_date comment.date_created}} </small>
-            </p>
-          </div>
-        </div>
-      {{/if}}
-    {{/each}}
-  </div>
-{{/each}}
+    {{#if (has_comments blog.id ../comments)}}
+      <div class="comment-container d-flex flex-column align-items-center d-none m-3" data-id="{{blog.id}}">
+        {{#each ../comments as |comment|}}
+          {{#if (eq comment.blog_id ../id)}}
+            <div class="card mt-3 w-75" data-id="{{comment.id}}">
+              <div class="card-body p-4">
+                <p class="card-text">{{comment.content}}</p>
+                <p class="card-text">
+                  <small> ~{{comment.user.name}}, {{ format_date comment.date_created}} </small>
+                </p>
+              </div>
+            </div>
+          {{/if}}
+        {{/each}}
+      </div>
+    {{/if}}
+  {{/each}}
+{{/if}}
