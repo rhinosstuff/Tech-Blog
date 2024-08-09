@@ -9,10 +9,10 @@
     <div class="container d-flex flex-column">
       <div class="blog-card card mt-4 mx-4" data-id="{{blog.id}}">
         <div class="blog-header d-flex justify-content-between p-2 m-0">
-          <h5>{{blog.title}}</h5>
+          <h5 id="blog-title-{{blog.id}}" class="blog-title" data-id="{{blog.id}}">{{blog.title}}</h5>
           <p class="m-0">Posted on: {{format_date blog.date_created}}</p>
         </div>
-        <p class="blog-content d-none p-3 m-0" data-id="{{blog.id}}">{{blog.content}}</p>
+        <p id="blog-content-{{blog.id}}" class="blog-content d-none p-3 m-0" data-id="{{blog.id}}">{{blog.content}}</p>
       </div>
 
       <div class="blog-btn-options d-none mt-3 ms-4" data-id="{{blog.id}}">

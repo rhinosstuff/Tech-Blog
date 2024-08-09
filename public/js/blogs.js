@@ -1,5 +1,5 @@
 const toggleBlogDisplay = (blogId) => {
-  // toggle corresponding comment div by data attribute that matches id
+  // toggle corresponding blog div by data attribute that matches id
   const blogContent = document.querySelector(`.blog-content[data-id="${blogId}"]`);
   const btnOptions = document.querySelector(`.blog-btn-options[data-id="${blogId}"]`);
   
@@ -23,31 +23,53 @@ const toggleCommentsDisplay = (blogId) => {
 };
 
 const newBlogHandler = async () => {
-  const { value: formValues } = await Swal.fire({
-    title: "New Blog",
-    html: `
-      <input id="swal-title" class="swal2-input swal-input" placeholder="Blog Title">
-      <textarea id="swal-content" class="swal2-textarea swal-input" placeholder="Blog Content"></textarea>
-    `,
-    focusConfirm: false,
+  const { value: title } = await Swal.fire({
+    input: "text",
+    inputLabel: "New Blog Title",
+    inputPlaceholder: "Blog Title...",
+    inputAttributes: {
+      "aria-label": "Blog Title"
+    },
     showCancelButton: true,
     customClass: {
       input: 'swal-input',
       confirmButton: 'swal-confirm-btn'
     },
-    preConfirm: () => {
-      const title = document.getElementById("swal-title").value;
-      const content = document.getElementById("swal-content").value;
-      if (!title || !content) {
-        Swal.showValidationMessage('You need to fill out both fields!');
-        return false;
+    preConfirm: (title) => {
+      if (!title) {
+        Swal.showValidationMessage('You need to write something!')
+      } else {
+        return title;
       }
-      return [title, content];
     }
   });
 
-  if (formValues) {
-    const [title, content] = formValues;
+  let content = '';
+  if (title) {
+    const { value } = await Swal.fire({
+      input: "textarea",
+      inputLabel: "New Blog Content",
+      inputPlaceholder: "Blog Content...",
+      inputAttributes: {
+        "aria-label": "Blog Content"
+      },
+      showCancelButton: true,
+      customClass: {
+        input: 'swal-input',
+        confirmButton: 'swal-confirm-btn'
+      },
+      preConfirm: (value) => {
+        if (!value) {
+          Swal.showValidationMessage('You need to write something!')
+        } else {
+          return value;
+        }
+      }
+    })
+    content = value;
+  }
+  
+  if (title && content) {
     try {
       const response = await fetch(`/api/blogs`, {
         method: 'POST',
@@ -58,7 +80,16 @@ const newBlogHandler = async () => {
       });
 
       if (response.ok) {
-        document.location.replace('/dashboard');
+        Swal.fire({
+          title: 'Created',
+          text: 'Your blog has been added.',
+          icon: 'success',
+          customClass: {
+            confirmButton: 'swal-confirm-btn'
+          }
+        }).then(() => {
+          document.location.replace('/dashboard');
+        });
       } else {
         throw new Error('Failed to create blog');
       }
@@ -67,7 +98,97 @@ const newBlogHandler = async () => {
         title: 'Error!',
         text: error.message,
         icon: 'error',
-        confirmButtonText: 'Okay'
+        confirmButtonText: 'Okay',
+        customClass: {
+          confirmButton: 'swal-confirm-btn'
+        }
+      });
+    }
+  }
+};
+
+const editBlogHandler = async (blogId, blogTitle, blogContent) => {
+  const { value: title } = await Swal.fire({
+    input: "text",
+    inputLabel: "Edit Blog Title",
+    inputPlaceholder: "Blog Title...",
+    inputValue: blogTitle,
+    inputAttributes: {
+      "aria-label": "Blog Title"
+    },
+    showCancelButton: true,
+    customClass: {
+      input: 'swal-input',
+      confirmButton: 'swal-confirm-btn'
+    },
+    preConfirm: (title) => {
+      if (!title) {
+        Swal.showValidationMessage('You need to write something!')
+      } else {
+        return title;
+      }
+    }
+  });
+
+  let content = '';
+  if (title) {
+    const { value } = await Swal.fire({
+      input: "textarea",
+      inputLabel: "Edit Blog Content",
+      inputPlaceholder: "Blog Content...",
+      inputValue: blogContent,
+      inputAttributes: {
+        "aria-label": "Blog Content"
+      },
+      showCancelButton: true,
+      customClass: {
+        input: 'swal-input',
+        confirmButton: 'swal-confirm-btn'
+      },
+      preConfirm: (value) => {
+        if (!value) {
+          Swal.showValidationMessage('You need to write something!')
+        } else {
+          return value;
+        }
+      }
+    })
+    content = value;
+  }
+
+  if (title && content) {
+    try {
+      const response = await fetch(`/api/blogs/${blogId}`, {
+        method: 'PUT',
+        body: JSON.stringify({ title, content }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.ok) {
+        Swal.fire({
+          title: 'Updated',
+          text: 'Your blog has been updated.',
+          icon: 'success',
+          customClass: {
+            confirmButton: 'swal-confirm-btn'
+          }
+        }).then(() => {
+          document.location.replace('/dashboard');
+        });
+      } else {
+        throw new Error('Failed to update blog');
+      }
+    } catch (error) {
+      Swal.fire({
+        title: 'Error!',
+        text: error.message,
+        icon: 'error',
+        confirmButtonText: 'Okay',
+        customClass: {
+          confirmButton: 'swal-confirm-btn'
+        }
       });
     }
   }
@@ -79,9 +200,10 @@ const delBlogHandler = async (blogId) => {
     text: "You won't be able to revert this!",
     icon: 'warning',
     showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'Yes, delete it!'
+    confirmButtonText: 'Yes, delete it!',
+    customClass: {
+      confirmButton: 'swal-confirm-btn'
+    }
   }).then(async (result) => {
     if (result.isConfirmed) {
       try {
@@ -90,11 +212,14 @@ const delBlogHandler = async (blogId) => {
         });
 
         if (response.ok) {
-          Swal.fire(
-            'Deleted!',
-            'Your blog has been deleted.',
-            'success'
-          ).then(() => {
+          Swal.fire({
+            title: 'Deleted!',
+            text: 'Your blog has been deleted.',
+            icon: 'success',
+            customClass: {
+              confirmButton: 'swal-confirm-btn'
+            }
+          }).then(() => {
             document.location.replace('/dashboard');
           });
         } else {
@@ -105,7 +230,10 @@ const delBlogHandler = async (blogId) => {
           title: 'Error!',
           text: error.message,
           icon: 'error',
-          confirmButtonText: 'Okay'
+          confirmButtonText: 'Okay',
+          customClass: {
+            confirmButton: 'swal-confirm-btn'
+          }
         });
       }
     }
@@ -125,6 +253,7 @@ document.addEventListener('click', function(event) {
   }
 });
 
+// listens on view-comments-btn, gets the blog id to send for toggling display
 document.addEventListener('click', function(event) {
   if (event.target.classList.contains('view-comments-btn')) {
     const blogId = event.target.getAttribute('data-id');
@@ -132,9 +261,21 @@ document.addEventListener('click', function(event) {
   }
 });
 
+// listens on add-blog-btn opens form
 document
   .querySelector('.add-blog-btn')?.addEventListener('click', newBlogHandler);
 
+// listens on edit-blog-btn, gets the blog id to send to be edited
+document.addEventListener('click', function(event) {
+  if (event.target.classList.contains('edit-blog-btn')) {
+    const blogId = event.target.getAttribute('data-id');
+    const blogTitle = document.getElementById(`blog-title-${blogId}`).textContent;
+    const blogContent = document.getElementById(`blog-content-${blogId}`).textContent;
+    editBlogHandler(blogId, blogTitle, blogContent);
+  }
+});
+
+// listens on del-blog-btn, gets the blog id to send to be deleted
 document.addEventListener('click', function(event) {
   if (event.target.classList.contains('del-blog-btn')) {
     const blogId = event.target.getAttribute('data-id');

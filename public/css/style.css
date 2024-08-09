@@ -60,10 +60,6 @@ nav a {
   margin: 0;
 }
 
-.add-comment-btn {
-  width: 200px;
-}
-
 .swal-input {
   border-color: var(--light);
   border-width: 2px;
