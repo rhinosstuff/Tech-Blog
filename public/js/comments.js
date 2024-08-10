@@ -39,7 +39,7 @@ const newCommentHandler = async (blogId, userId) => {
               icon: "success",
               title: "Your comment has been added",
               showConfirmButton: false,
-              timer: 1300
+              timer: 1000
             }).then(() => {
               document.location.replace(`/`);
             });

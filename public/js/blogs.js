@@ -12,8 +12,10 @@ const toggleBlogDisplay = (blogId) => {
     btnOptions.classList.toggle('d-none');
   }
 
-  if (!comments.classList.contains('d-none')) {
-    comments.classList.toggle('d-none');
+  if (comments) {
+    if (!comments.classList.contains('d-none')) {
+      comments.classList.toggle('d-none');
+    }
   }
 
 };
@@ -23,7 +25,6 @@ const toggleCommentsDisplay = (blogId) => {
   const comments = document.querySelector(`.comment-container[data-id="${blogId}"]`);
 
   if (comments) {
-    console.log(comments)
     comments.classList.toggle('d-none');
   }
 };
@@ -62,6 +63,7 @@ const newBlogHandler = async () => {
         "aria-label": "Blog Content"
       },
       showCancelButton: true,
+      animation: false,
       customClass: {
         inputLabel: 'swal-title',
         input: 'swal-input',
@@ -95,7 +97,7 @@ const newBlogHandler = async () => {
           icon: "success",
           title: "Your blog has been added",
           showConfirmButton: false,
-          timer: 1300
+          timer: 1200
         }).then(() => {
           document.location.replace('/dashboard');
         });
@@ -152,6 +154,7 @@ const editBlogHandler = async (blogId, blogTitle, blogContent) => {
         "aria-label": "Blog Content"
       },
       showCancelButton: true,
+      animation: false,
       customClass: {
         inputLabel: 'swal-title',
         input: 'swal-input',
@@ -185,7 +188,7 @@ const editBlogHandler = async (blogId, blogTitle, blogContent) => {
           icon: "success",
           title: "Your blog has been updated",
           showConfirmButton: false,
-          timer: 1300
+          timer: 1200
         }).then(() => {
           document.location.replace('/dashboard');
         });
@@ -230,7 +233,7 @@ const delBlogHandler = async (blogId) => {
             icon: "success",
             title: "Your blog has been deleted",
             showConfirmButton: false,
-            timer: 1300
+            timer: 1200
           }).then(() => {
             document.location.replace('/dashboard');
           });
