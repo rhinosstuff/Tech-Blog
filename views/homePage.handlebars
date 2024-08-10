@@ -1,16 +1,16 @@
 {{#if blogs.length}}
   {{!-- display blogs  --}}
   {{#each blogs as |blog|}}
-    <div class="container d-flex flex-column">
-      <div class="blog-card card mt-4 mx-4" data-id="{{blog.id}}">
-        <div class="blog-header d-flex justify-content-between p-2 m-0">
+    <div class="d-flex flex-column mx-3">
+      <div class="blog-card card mt-4 mx-5" data-id="{{blog.id}}">
+        <div class="blog-header d-flex justify-content-between m-0 px-4 py-3">
           <h5>{{blog.title}}</h5>
           <p class="m-0">Posted by: {{blog.user.name}} on {{format_date blog.date_created}}</p>
         </div>
         <p class="blog-content d-none p-3 m-0" data-id="{{blog.id}}">{{blog.content}}</p>
       </div>
-      <div class="blog-btn-options d-none mt-3 ms-4" data-id="{{blog.id}}">
-        <button class="add-comment-btn btn btn-secondary me-2" data-id="{{blog.id}}" data-user-id="{{blog.user_id}}">+Comment</button>
+      <div class="blog-btn-options d-none mt-2 ms-5" data-id="{{blog.id}}">
+        <button class="add-comment-btn btn me-2" data-id="{{blog.id}}" data-user-id="{{blog.user_id}}">+Comment</button>
         {{#if (has_comments blog.id ../comments)}}
           <button class="view-comments-btn btn btn-secondary" data-id="{{blog.id}}">View Comments</button>
         {{/if}}
@@ -26,7 +26,7 @@
               <div class="card-body p-4">
                 <p class="card-text">{{comment.content}}</p>
                 <p class="card-text">
-                  <small> ~{{comment.user.name}}, {{ format_date comment.date_created}} </small>
+                  <small> ~ {{comment.user.name}}, {{ format_date comment.date_created}} </small>
                 </p>
               </div>
             </div>

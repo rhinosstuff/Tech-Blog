@@ -9,8 +9,10 @@ const newCommentHandler = async (blogId, userId) => {
     },
     showCancelButton: true,
     customClass: {
+      inputLabel: 'swal-title',
       input: 'swal-input',
-      confirmButton: 'swal-confirm-btn'
+      confirmButton: 'swal-confirm-btn',
+      cancelButton: 'swal-cancel-btn'
     },
     preConfirm: (text) => {
       if (!text) {
@@ -32,7 +34,15 @@ const newCommentHandler = async (blogId, userId) => {
           });
           
           if (response.ok) {
+            Swal.fire({
+              position: "middle",
+              icon: "success",
+              title: "Your comment has been added",
+              showConfirmButton: false,
+              timer: 1300
+            }).then(() => {
               document.location.replace(`/`);
+            });
           } else {
               console.error("there's been an error");
           }

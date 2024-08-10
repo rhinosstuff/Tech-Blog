@@ -14,17 +14,16 @@
 </head>
 
 <body>
-  <header class="d-flex flex-column align-items-start p-3">
+  <header class="d-flex flex-column align-items-start ps-4 p-3">
     <nav class="d-flex align-items-center mb-3">
       <a href="/" class="me-4" >Home</a> 
       <!-- Conditionally render login or logout links -->
       {{#if logged_in}}
       <a href="/dashboard" class="me-4" >Dashboard</a>
-      {{!-- <div id="logout">Logout</div> --}}
-      <button class="bg-warning" id="logout">Logout</button>
+      <button class="logout-btn" id="logout">Logout</button>
       {{else}}
       <a href="/login" class="me-4" >Dashboard</a>
-      <a href="/login" class="me-4">Login</a>
+      <a href="/login" class="me-4"><button class="login-btn" id="login">Login</button></a>
       {{/if}}
     </nav>
     <h1 class="p-2 rounded">{{pageTitle}}</h1> 
@@ -41,9 +40,10 @@
 
   <!-- Render script for logged in users only -->
   {{#if logged_in}}
-  <script src="/js/logout.js"></script>
+    <script src="/js/logout.js"></script>
   {{/if}}
 
+  {{!-- Creates a conditional to check if blogs should be displayed in blogs.js --}}
   <script>
     const isLoggedIn = {{#if logged_in}}true{{else}}false{{/if}};
   </script>

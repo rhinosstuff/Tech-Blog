@@ -2,6 +2,7 @@ const toggleBlogDisplay = (blogId) => {
   // toggle corresponding blog div by data attribute that matches id
   const blogContent = document.querySelector(`.blog-content[data-id="${blogId}"]`);
   const btnOptions = document.querySelector(`.blog-btn-options[data-id="${blogId}"]`);
+  const comments = document.querySelector(`.comment-container[data-id="${blogId}"]`);
   
   if (blogContent) {
     blogContent.classList.toggle('d-none');
@@ -10,6 +11,11 @@ const toggleBlogDisplay = (blogId) => {
   if (btnOptions) {
     btnOptions.classList.toggle('d-none');
   }
+
+  if (!comments.classList.contains('d-none')) {
+    comments.classList.toggle('d-none');
+  }
+
 };
 
 const toggleCommentsDisplay = (blogId) => {
@@ -32,8 +38,10 @@ const newBlogHandler = async () => {
     },
     showCancelButton: true,
     customClass: {
+      inputLabel: 'swal-title',
       input: 'swal-input',
-      confirmButton: 'swal-confirm-btn'
+      confirmButton: 'swal-confirm-btn',
+      cancelButton: 'swal-cancel-btn'
     },
     preConfirm: (title) => {
       if (!title) {
@@ -55,8 +63,10 @@ const newBlogHandler = async () => {
       },
       showCancelButton: true,
       customClass: {
+        inputLabel: 'swal-title',
         input: 'swal-input',
-        confirmButton: 'swal-confirm-btn'
+        confirmButton: 'swal-confirm-btn',
+        cancelButton: 'swal-cancel-btn'
       },
       preConfirm: (value) => {
         if (!value) {
@@ -81,12 +91,11 @@ const newBlogHandler = async () => {
 
       if (response.ok) {
         Swal.fire({
-          title: 'Created',
-          text: 'Your blog has been added.',
-          icon: 'success',
-          customClass: {
-            confirmButton: 'swal-confirm-btn'
-          }
+          position: "middle",
+          icon: "success",
+          title: "Your blog has been added",
+          showConfirmButton: false,
+          timer: 1300
         }).then(() => {
           document.location.replace('/dashboard');
         });
@@ -118,8 +127,10 @@ const editBlogHandler = async (blogId, blogTitle, blogContent) => {
     },
     showCancelButton: true,
     customClass: {
+      inputLabel: 'swal-title',
       input: 'swal-input',
-      confirmButton: 'swal-confirm-btn'
+      confirmButton: 'swal-confirm-btn',
+      cancelButton: 'swal-cancel-btn'
     },
     preConfirm: (title) => {
       if (!title) {
@@ -142,8 +153,10 @@ const editBlogHandler = async (blogId, blogTitle, blogContent) => {
       },
       showCancelButton: true,
       customClass: {
+        inputLabel: 'swal-title',
         input: 'swal-input',
-        confirmButton: 'swal-confirm-btn'
+        confirmButton: 'swal-confirm-btn',
+        cancelButton: 'swal-cancel-btn'
       },
       preConfirm: (value) => {
         if (!value) {
@@ -168,12 +181,11 @@ const editBlogHandler = async (blogId, blogTitle, blogContent) => {
 
       if (response.ok) {
         Swal.fire({
-          title: 'Updated',
-          text: 'Your blog has been updated.',
-          icon: 'success',
-          customClass: {
-            confirmButton: 'swal-confirm-btn'
-          }
+          position: "middle",
+          icon: "success",
+          title: "Your blog has been updated",
+          showConfirmButton: false,
+          timer: 1300
         }).then(() => {
           document.location.replace('/dashboard');
         });
@@ -202,7 +214,8 @@ const delBlogHandler = async (blogId) => {
     showCancelButton: true,
     confirmButtonText: 'Yes, delete it!',
     customClass: {
-      confirmButton: 'swal-confirm-btn'
+      confirmButton: 'swal-confirm-btn',
+      cancelButton: 'swal-cancel-btn'
     }
   }).then(async (result) => {
     if (result.isConfirmed) {
@@ -213,12 +226,11 @@ const delBlogHandler = async (blogId) => {
 
         if (response.ok) {
           Swal.fire({
-            title: 'Deleted!',
-            text: 'Your blog has been deleted.',
-            icon: 'success',
-            customClass: {
-              confirmButton: 'swal-confirm-btn'
-            }
+            position: "middle",
+            icon: "success",
+            title: "Your blog has been deleted",
+            showConfirmButton: false,
+            timer: 1300
           }).then(() => {
             document.location.replace('/dashboard');
           });

@@ -1,23 +1,23 @@
 <div class="d-flex flex-column align-items-center">
   <h2 class="text-center m-3">Welcome, {{name}}!</h2>
-  <button class="add-blog-btn btn btn-secondary" data-user-id="{{id}}">+Blog</button>
+  <button class="add-blog-btn btn" data-user-id="{{id}}">+New Blog</button>
 </div>
 
 {{#if blogs.length}}
   {{!-- display blogs  --}}
   {{#each blogs as |blog|}}
-    <div class="container d-flex flex-column">
-      <div class="blog-card card mt-4 mx-4" data-id="{{blog.id}}">
-        <div class="blog-header d-flex justify-content-between p-2 m-0">
+    <div class="d-flex flex-column mx-3">
+      <div class="blog-card card mt-4 mx-5" data-id="{{blog.id}}">
+        <div class="blog-header d-flex justify-content-between m-0 px-4 py-3">
           <h5 id="blog-title-{{blog.id}}" class="blog-title" data-id="{{blog.id}}">{{blog.title}}</h5>
           <p class="m-0">Posted on: {{format_date blog.date_created}}</p>
         </div>
         <p id="blog-content-{{blog.id}}" class="blog-content d-none p-3 m-0" data-id="{{blog.id}}">{{blog.content}}</p>
       </div>
 
-      <div class="blog-btn-options d-none mt-3 ms-4" data-id="{{blog.id}}">
-        <button class="edit-blog-btn btn btn-warning me-2" data-id="{{blog.id}}">Edit</button>
-        <button class="del-blog-btn btn btn-danger me-2" data-id="{{blog.id}}">Delete</button>
+      <div class="blog-btn-options d-none mt-2 ms-5" data-id="{{blog.id}}">
+        <button class="edit-blog-btn btn me-2" data-id="{{blog.id}}">Edit</button>
+        <button class="del-blog-btn btn me-2" data-id="{{blog.id}}">Delete</button>
         {{#if (has_comments blog.id ../comments)}}
           <button class="view-comments-btn btn btn-secondary" data-id="{{blog.id}}">View Comments</button>
         {{/if}}
@@ -35,7 +35,7 @@
               <div class="card-body p-4">
                 <p class="card-text">{{comment.content}}</p>
                 <p class="card-text">
-                  <small> ~{{comment.user.name}}, {{ format_date comment.date_created}} </small>
+                  <small> ~ {{comment.user.name}}, {{ format_date comment.date_created}} </small>
                 </p>
               </div>
             </div>
