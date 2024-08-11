@@ -2,16 +2,18 @@ const router = require('express').Router();
 const { User, Blog, Comment } = require('../models');
 const withAuth = require('../utils/auth');
 
+
+// Route for homepage
 router.get('/', async (req, res) => {
   try {
-    // Get all blogs and JOIN with user name
+    // Get all blogs and JOIN with username
     const blogData = await Blog.findAll({
-      include: [{ model: User, attributes: ['name', 'id'] }]
+      include: [{ model: User, attributes: ['username', 'id'] }]
     });
 
-    // Get all comments and JOIN with user name
+    // Get all comments and JOIN with username
     const commentData = await Comment.findAll({
-      include: [{ model: User, attributes: ['name', 'id'] }]
+      include: [{ model: User, attributes: ['username', 'id'] }]
     });
 
     const blogs = blogData.map((blog) => blog.get({ plain: true }));
@@ -29,7 +31,8 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Use withAuth middleware to prevent access to route
+
+// Route for user dashboard. Uses withAuth middleware to prevent access to route
 router.get('/dashboard', withAuth, async (req, res) => {
   try {
     // Find the logged in user based on the session ID
@@ -38,9 +41,9 @@ router.get('/dashboard', withAuth, async (req, res) => {
       include: [{ model: Blog }]
     });
 
-    // Get all comments and JOIN with user name
+    // Get all comments and JOIN with username
     const commentData = await Comment.findAll({
-      include: [{ model: User, attributes: ['name'] }]
+      include: [{ model: User, attributes: ['username'] }]
     });
 
     const user = userData.get({ plain: true });
@@ -57,6 +60,8 @@ router.get('/dashboard', withAuth, async (req, res) => {
   }
 });
 
+
+// Route for user login
 router.get('/login', (req, res) => {
   // If the user is already logged in, redirect the request to dashboard
   if (req.session.logged_in) {

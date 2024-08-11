@@ -1,43 +1,31 @@
+<div class="form-toggle d-flex flex-column align-items-center mt-4">
+  {{!-- Login form --}}
+  <form class="form login-form d-flex flex-column py-3 px-4 ">
+    <h2 class="align-self-center">Login</h2>
+    <div class="form-group">
+      <label for="username-login">Username</label>
+      <input type="text" class="form-control" id="username-login">
+    </div>
+    <div class="form-group">
+      <label for="password-login">Password</label>
+      <input type="password" class="form-control" id="password-login">
+    </div>
+    <button type="submit" class="btn submit-btn">Submit</button>
+    <small class="switch-form mt-2"><p class="m-0 p-1">Don't have an account SignUp here.</p></small>
+  </form>
 
-<div class="row">
-  <div class="col-md-6">
-    <h2>Login</h2>
-
-    <form class="form login-form">
-      <div class="form-group">
-        <label for="email-login">email:</label>
-        <input class="form-input" type="text" id="email-login" />
-      </div>
-      <div class="form-group">
-        <label for="password-login">password:</label>
-        <input class="form-input" type="password" id="password-login" />
-      </div>
-      <div class="form-group">
-        <button class="btn btn-primary" type="submit">login</button>
-      </div>
-    </form>
-  </div>
-  <div class="col-md-6">
-    <h2>Signup</h2>
-
-    <form class="form signup-form">
-      <div class="form-group">
-        <label for="name-signup">name:</label>
-        <input class="form-input" type="text" id="name-signup" />
-      </div>
-      <div class="form-group">
-        <label for="email-signup">email:</label>
-        <input class="form-input" type="text" id="email-signup" />
-      </div>
-      <div class="form-group">
-        <label for="password-signup">password:</label>
-        <input class="form-input" type="password" id="password-signup" />
-      </div>
-      <div class="form-group">
-        <button class="btn btn-primary" type="submit">signup</button>
-      </div>
-    </form>
-  </div>
+  {{!-- Signup form --}}
+  <form class="form signup-form d-flex flex-column py-3 px-4 d-none">
+    <h2 class="align-self-center">SignUp</h2>
+    <div class="form-group">
+      <label for="username-signup">Username</label>
+      <input type="text" class="form-control" id="username-signup">
+    </div>
+    <div class="form-group">
+      <label for="password-signup">Password</label>
+      <input type="password" class="form-control" id="password-signup">
+    </div>
+    <button type="submit" class="btn submit-btn">Submit</button>
+    <small class="switch-form mt-2"><p class="m-0 p-1">Already have an account Login here.</p></small>
+  </form>
 </div>
-
-<script src="./js/login.js"></script>

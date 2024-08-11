@@ -2,13 +2,13 @@
   --dark: #0D1821;
   --mid: #8D818C;
   --light: #DFF8EB;
-  --edit: #21897E;
-  --delete: #70161E;
-  --btn-txt-color: white;
+  --greenColor: #21897E;
+  --redColor: #70161E;
+  --whiteColor: #FCFBFC;
 }
 
 
-/* sets as default fonts in body and al <h> tags */
+/* sets default fonts in body and all <h> tags */
 body {
   min-width: 350px;
   background-color: var(--light);
@@ -25,7 +25,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 
-/* main.handlebars header & nav links */
+/* main.handlebars header, nav links & footer */
 header {
   background-color: var(--dark);
 }
@@ -45,92 +45,119 @@ nav a {
   color: var(--light);
 }
 
+.footer-link {
+  text-decoration: none;
+  color: inherit; 
+}
+
+.footer-image {
+  height: 24px;
+}
+
+
+/* login & signup */
+.form {
+  background-color: var(--whiteColor);
+  border-radius: 5%;
+}
+
+.switch-form {
+  color: blue;
+  cursor: pointer;
+  transition: filter 0.5s ease;
+}
+
+.switch-form:hover {
+  background-color: var(--greenColor);
+  color: var(--whiteColor);
+  filter: brightness(1.5);
+}
 
 /* buttons custom css */
-.login-btn {
-  background-color: var(--edit);
-  color: var(--btn-txt-color);
-  transition: filter 0.3s ease;
-}
+  /* login navbar */
+  #login {
+    background-color: var(--greenColor);
+    color: var(--whiteColor);
+    transition: filter 0.3s ease;
+  }
 
-.login-btn:hover {
-  background-color: var(--edit);
-  color: var(--btn-txt-color);
-  filter: brightness(1.2);
-}
+  #login:hover {
+    filter: brightness(1.2);
+  }
 
-.logout-btn {
-  background-color: var(--delete);
-  color: var(--btn-txt-color);
-  transition: filter 0.3s ease;
-}
+  /* logout navbar */
+  #logout {
+    background-color: var(--redColor);
+    color: var(--whiteColor);
+    transition: filter 0.3s ease;
+  }
 
-.logout-btn:hover {
-  background-color: var(--delete);
-  color: var(--btn-txt-color);
-  filter: brightness(1.2);
-}
+  #logout:hover {
+    filter: brightness(1.2);
+  }
 
-.add-blog-btn {
-  width: 200px;
-  background-color: var(--mid);
-  color: var(--btn-txt-color);
-  transition: filter 0.3s ease;
-}
+  /* bootStrap overide for btn */
+  .btn {
+    color: var(--whiteColor);
+    transition: filter 0.3s ease;
+  }
 
-.add-blog-btn:hover {
-  background-color: var(--mid);
-  color: var(--btn-txt-color);
-  filter: brightness(1.2);
-}
+  .btn:hover {
+    color: var(--whiteColor);
+    filter: brightness(1.2);
+  }
 
-.edit-blog-btn {
-  background-color: var(--edit);
-  color: var(--btn-txt-color);
-  transition: filter 0.3s ease;
-}
+  /* colors and effects for buttons */
+  .submit-btn {
+    background-color: var(--greenColor);
+    transition: filter 0.3s ease;
+  }
 
-.edit-blog-btn:hover {
-  background-color: var(--edit);
-  color: var(--btn-txt-color);
-  filter: brightness(1.2);
-}
+  .submit-btn:hover {
+    background-color: var(--greenColor);
+    filter: brightness(1.2);
+  }
 
-.del-blog-btn {
-  background-color: var(--delete);
-  color: var(--btn-txt-color);
-  transition: filter 0.3s ease;
-}
+  .add-blog-btn {
+    width: 200px;
+    background-color: var(--mid);
+  }
 
-.del-blog-btn:hover {
-  background-color: var(--delete);
-  color: var(--btn-txt-color);
-  filter: brightness(1.2);
-}
+  .add-blog-btn:hover {
+    background-color: var(--mid);
+  }
 
-.add-comment-btn {
-  background-color: var(--mid);
-  color: var(--btn-txt-color);
-  transition: filter 0.3s ease;
-}
+  .edit-blog-btn {
+    background-color: var(--greenColor);
+  }
 
-.add-comment-btn:hover {
-  background-color: var(--mid);
-  color: var(--btn-txt-color);
-  filter: brightness(1.2);
-}  
+  .edit-blog-btn:hover {
+    background-color: var(--greenColor);
+  }
 
-.view-comments-btn {
-  background-color: var(--mid);
-  color: var(--btn-txt-color);
-  transition: filter 0.3s ease;
-}
+  .del-blog-btn {
+    background-color: var(--redColor);
+  }
 
-.view-comments-btn:hover {
-  background-color: var(--mid);
-  color: var(--btn-txt-color);
-  filter: brightness(1.2);
-}
+  .del-blog-btn:hover {
+    background-color: var(--redColor);
+  }
+
+  .add-comment-btn {
+    background-color: var(--mid);
+  }
+
+  .add-comment-btn:hover {
+    background-color: var(--mid);
+  }  
+
+  .view-comments-btn {
+    background-color: var(--mid);
+  }
+
+  .view-comments-btn:hover {
+    background-color: var(--mid);
+  }
 
 
 /* blog cards */
@@ -144,7 +171,8 @@ nav a {
   color: var(--mid);
 }
 
-.blog-header:hover {
+.blog-header:hover,
+.blog-header.active {
   color: var(--light);
 }
 
@@ -186,13 +214,13 @@ nav a {
 
 .swal-cancel-btn {
   background-color: var(--mid);
-  color: var(--btn-txt-color);
+  color: var(--whiteColor);
   transition: filter 0.3s ease;
 }
 
 .swal-cancel-btn:hover {
   background-color: var(--mid);
-  color: var(--btn-txt-color);
+  color: var(--whiteColor);
   filter: brightness(1.2);
 }
 

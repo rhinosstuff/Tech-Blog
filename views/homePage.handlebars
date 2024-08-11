@@ -5,10 +5,12 @@
       <div class="blog-card card mt-4 mx-5" data-id="{{blog.id}}">
         <div class="blog-header d-flex justify-content-between m-0 px-4 py-3">
           <h5>{{blog.title}}</h5>
-          <p class="m-0">Posted by: {{blog.user.name}} on {{format_date blog.date_created}}</p>
+          <p class="m-0">Posted by: {{blog.user.username}} on {{format_date blog.date_created}}</p>
         </div>
         <p class="blog-content d-none p-3 m-0" data-id="{{blog.id}}">{{blog.content}}</p>
       </div>
+      
+      {{!-- display blog button bar  --}}
       <div class="blog-btn-options d-none mt-2 ms-5" data-id="{{blog.id}}">
         <button class="add-comment-btn btn me-2" data-id="{{blog.id}}" data-user-id="{{blog.user_id}}">+Comment</button>
         {{#if (has_comments blog.id ../comments)}}
@@ -17,7 +19,7 @@
       </div>
     </div>
 
-    {{!-- display comments  --}}
+    {{!-- display blog comments  --}}
     {{#if (has_comments blog.id ../comments)}}
       <div class="comment-container d-flex flex-column align-items-center d-none m-3" data-id="{{blog.id}}">
         {{#each ../comments as |comment|}}
@@ -26,7 +28,7 @@
               <div class="card-body p-4">
                 <p class="card-text">{{comment.content}}</p>
                 <p class="card-text">
-                  <small> ~ {{comment.user.name}}, {{ format_date comment.date_created}} </small>
+                  <small> ~ {{comment.user.username}}, {{ format_date comment.date_created}} </small>
                 </p>
               </div>
             </div>

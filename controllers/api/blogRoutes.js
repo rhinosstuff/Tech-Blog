@@ -2,6 +2,8 @@ const router = require('express').Router();
 const { Blog } = require('../../models');
 const withAuth = require('../../utils/auth');
 
+
+// Route for new blog
 router.post('/', withAuth, async (req, res) => {
   try {
     const newBlog = await Blog.create({
@@ -15,6 +17,8 @@ router.post('/', withAuth, async (req, res) => {
   }
 });
 
+
+// Route for edit blog
 router.put('/:id', withAuth, async (req, res) => {
   try {
     const blogData = await Blog.findOne({
@@ -40,6 +44,8 @@ router.put('/:id', withAuth, async (req, res) => {
   }
 });
 
+
+// Route for delete blog
 router.delete('/:id', withAuth, async (req, res) => {
   try {
     const blogData = await Blog.destroy({
