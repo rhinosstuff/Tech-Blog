@@ -1,12 +1,10 @@
-// fetch request to add a comment
+// Handles the creation of a new comment using SweetAlert forms
 const newCommentHandler = async (blogId, userId) => {
+  // Prompt user for a new comment
   const { value: text } = await Swal.fire({
-    input: "textarea",
-    inputLabel: "Please Leave a Comment",
-    inputPlaceholder: "Type your comment here...",
-    inputAttributes: {
-      "aria-label": "Type your comment here"
-    },
+    input: 'textarea',
+    inputLabel: 'Please Leave a Comment',
+    inputPlaceholder: 'Type your comment here...',
     showCancelButton: true,
     customClass: {
       inputLabel: 'swal-title',
@@ -22,37 +20,43 @@ const newCommentHandler = async (blogId, userId) => {
       }
     }
   });
-
-  const comment = text
   
-  if (comment) {
+  // Submit the new comment if text is provided
+  if (text) {
       try {
           const response = await fetch('/api/comments', {
               method: 'POST',
-              body: JSON.stringify({ content: comment, blog_id: blogId, user_id: userId }),
-              headers: { 'Content-Type': 'application/json', },
+              body: JSON.stringify({ content: text, blog_id: blogId, user_id: userId }),
+              headers: { 'Content-Type': 'application/json' }
           });
           
           if (response.ok) {
             Swal.fire({
-              position: "middle",
-              icon: "success",
-              title: "Your comment has been added",
+              position: 'middle',
+              icon: 'success',
+              title: 'Your comment has been added',
               showConfirmButton: false,
-              timer: 1000
+              timer: 1200
             }).then(() => {
               document.location.replace(`/`);
             });
           } else {
-              console.error("there's been an error");
+            throw new Error('Failed to create comment');
           }
       } catch (error) {
-          console.error(error.message);
+        Swal.fire({
+          title: 'Error!',
+          text: error.message,
+          icon: 'error',
+          confirmButtonText: 'Okay',
+          customClass: { confirmButton: 'swal-confirm-btn' }
+        });
       }
   }
 };
 
-// listens on add comment button, gets blog and user id to send for post request 
+
+// Open the new comment form when the '+Comment' button is clicked
 document.addEventListener('click', function(event) {
   if (event.target.classList.contains('add-comment-btn')) {
     const blogId = event.target.getAttribute('data-id');
