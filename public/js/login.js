@@ -123,7 +123,7 @@ document.addEventListener('DOMContentLoaded', function() {
       toast: true,
       position: "top-end",
       showConfirmButton: false,
-      timer: 3000,
+      timer: 2000,
       timerProgressBar: true,
       didOpen: (toast) => {
         toast.onmouseenter = Swal.stopTimer;
@@ -133,6 +133,29 @@ document.addEventListener('DOMContentLoaded', function() {
     Toast.fire({
       icon: "success",
       title: "Signed in successfully"
+    });
+  }
+});
+
+
+// Check if 'logout=success' is present in the URL
+document.addEventListener('DOMContentLoaded', function() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('logout') === 'success') {
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 2000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+      }
+    });
+    Toast.fire({
+      icon: "success",
+      title: "Signed out successfully"
     });
   }
 });

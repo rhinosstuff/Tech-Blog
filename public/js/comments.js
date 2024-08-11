@@ -59,8 +59,13 @@ const newCommentHandler = async (blogId, userId) => {
 // Open the new comment form when the '+Comment' button is clicked
 document.addEventListener('click', function(event) {
   if (event.target.classList.contains('add-comment-btn')) {
+    if (isLoggedIn) {
     const blogId = event.target.getAttribute('data-id');
     const userId = event.target.getAttribute('data-user-id');
     newCommentHandler(blogId, userId);
+    } else {
+      // Redirect to login if user is not logged in
+      document.location.replace('/login');
+    }
   }
 });

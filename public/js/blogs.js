@@ -245,19 +245,14 @@ document.addEventListener('click', function(event) {
 
   // Check if the clicked element is within a blog card
   if (blogCard) {
-    // If user is logged in, toggle the display of blog content
-    if (isLoggedIn) {
-      const blogId = blogCard.getAttribute('data-id');
-      toggleBlogDisplay(blogId);
+    // Toggle the display of blog content
+    const blogId = blogCard.getAttribute('data-id');
+    toggleBlogDisplay(blogId);
 
-      // Toggle the 'active' class on the blog header for visual feedback
-      const blogHeader = blogCard.querySelector('.blog-header');
-      if (blogHeader) {
-        blogHeader.classList.toggle('active');
-      }
-    } else {
-      // Redirect to login if user is not logged in
-      document.location.replace('/login');
+    // Toggle the 'active' class on the blog header for visual feedback
+    const blogHeader = blogCard.querySelector('.blog-header');
+    if (blogHeader) {
+      blogHeader.classList.toggle('active');
     }
   }
 });

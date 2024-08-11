@@ -7,7 +7,7 @@ const logout = async () => {
 
     if (response.ok) {
       // Redirect to the homepage after successful logout
-      document.location.replace('/');
+      document.location.replace('/?logout=success');
     } else {
       // Handle specific response codes if needed
       const result = await response.json();
@@ -19,6 +19,7 @@ const logout = async () => {
     alert('An error occurred during logout. Please try again later.');
   }
 };
+
 
 // Triggers user logout
 document.querySelector('#logout').addEventListener('click', logout);
