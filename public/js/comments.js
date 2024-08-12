@@ -23,35 +23,35 @@ const newCommentHandler = async (blogId, userId) => {
   
   // Submit the new comment if text is provided
   if (text) {
-      try {
-          const response = await fetch('/api/comments', {
-              method: 'POST',
-              body: JSON.stringify({ content: text, blog_id: blogId, user_id: userId }),
-              headers: { 'Content-Type': 'application/json' }
-          });
-          
-          if (response.ok) {
-            Swal.fire({
-              position: 'middle',
-              icon: 'success',
-              title: 'Your comment has been added',
-              showConfirmButton: false,
-              timer: 1200
-            }).then(() => {
-              document.location.replace(`/`);
-            });
-          } else {
-            throw new Error('Failed to create comment');
-          }
-      } catch (error) {
-        Swal.fire({
-          title: 'Error!',
-          text: error.message,
-          icon: 'error',
-          confirmButtonText: 'Okay',
-          customClass: { confirmButton: 'swal-confirm-btn' }
+    try {
+        const response = await fetch('/api/comments', {
+            method: 'POST',
+            body: JSON.stringify({ content: text, blog_id: blogId, user_id: userId }),
+            headers: { 'Content-Type': 'application/json' }
         });
-      }
+        
+        if (response.ok) {
+          Swal.fire({
+            position: 'middle',
+            icon: 'success',
+            title: 'Your comment has been added',
+            showConfirmButton: false,
+            timer: 1200
+          }).then(() => {
+            document.location.replace(`/?view-comments=${blogId}`);
+          });
+        } else {
+          throw new Error('Failed to create comment');
+        }
+    } catch (error) {
+      Swal.fire({
+        title: 'Error!',
+        text: error.message,
+        icon: 'error',
+        confirmButtonText: 'Okay',
+        customClass: { confirmButton: 'swal-confirm-btn' }
+      });
+    }
   }
 };
 

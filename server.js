@@ -42,7 +42,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(routes);
 
-// Syncs the Sequelize models with the database (without dropping existing tables).
+// Syncs the Sequelize models with the database and starts the server.
 sequelize.sync({ force: false }).then(() => {
   app.listen(PORT, () => console.log(`Now listening on http://localhost:${PORT}/`));
 });

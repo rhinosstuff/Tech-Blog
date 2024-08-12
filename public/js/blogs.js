@@ -1,12 +1,17 @@
 // Toggles the display of corresponding blog elements by data attribute that matches blogId
 const toggleBlogDisplay = (blogId) => {
   // Get the blog content, button options, and comments elements based on blogId
+  const blogCard = document.querySelector(`.blog-card[data-id='${blogId}']`);
   const blogContent = document.querySelector(`.blog-content[data-id='${blogId}']`);
   const btnOptions = document.querySelector(`.blog-btn-options[data-id='${blogId}']`);
   const comments = document.querySelector(`.comment-container[data-id='${blogId}']`);
   
   // Toggle visibility of blog content and button options
-  if (blogContent) blogContent.classList.toggle('d-none');
+  if (blogContent) {
+    blogContent.classList.toggle('d-none');
+    // Scroll the blog card into view
+    blogCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
   if (btnOptions) btnOptions.classList.toggle('d-none');
 
   // Only hide comments if they are currently visible
@@ -19,7 +24,11 @@ const toggleBlogDisplay = (blogId) => {
 // Toggles the display of the comment section corresponding to the blogId
 const toggleCommentsDisplay = (blogId) => {
   const comments = document.querySelector(`.comment-container[data-id='${blogId}']`);
-  if (comments) comments.classList.toggle('d-none');
+  if (comments) {
+    comments.classList.toggle('d-none');
+    // Scroll the comment comtainer into view
+    comments.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
 };
 
 
@@ -237,6 +246,31 @@ const delBlogHandler = async (blogId) => {
     }
   });
 };
+
+
+// Check if 'view-comments=blogId' is present in the URL
+document.addEventListener('DOMContentLoaded', function() {
+  const params = new URLSearchParams(window.location.search);
+  const blogId = params.get('view-comments');
+  if (blogId) {
+    toggleBlogDisplay(blogId);
+    toggleCommentsDisplay(blogId);
+
+    // Scroll to the blog element's position and trigger the blog-header
+    const blogCard = document.querySelector(`.blog-card[data-id='${blogId}']`);
+    if (blogCard) {
+
+      // Find the blog-header within the blog-card
+      const blogHeader = blogCard.querySelector('.blog-header');
+      if (blogHeader) {
+        blogHeader.classList.toggle('active');
+      }
+
+      // Scroll the blog card into view
+      blogCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+});
 
 
 // Toggle display of blog content and buttons on blog card click
