@@ -154,8 +154,8 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
     Toast.fire({
-      icon: "success",
-      title: "Signed out successfully"
+      icon: "warning",
+      title: "You've been logged out"
     });
   }
 });

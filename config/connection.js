@@ -3,7 +3,7 @@ require('dotenv').config();
 
 let sequelize;
 
-// if not DB_URL, then create a session bassed on individual settings 
+// If DB_URL is provided, connect using that URL; otherwise, connect using individual settings
 if (process.env.DB_URL) {
   sequelize = new Sequelize(process.env.DB_URL);
 } else {
