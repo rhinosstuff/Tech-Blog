@@ -29,8 +29,22 @@
   ## Usage
   *** **[Click Here - For Deployed Application](https://tech-blog-6pus.onrender.com/)** ***
 
-  This is a easy to use blog and comment application. You can view all blogs and comments as a guest. If you would like to write a blog or post a comment you will need to login or signup first. Once logged in you will be able to see all your blogs and can choose to edit or delte them. You can also go to the homepage and add a comment to other user blogs.
+  This is a easy to use blog and comment application. You can view all blogs and comments as a guest. If you would like to write a blog or post a comment you will need to login or signup first. Once logged in you will be able to see all your blogs and can choose to edit or delte them. You can also go to the homepage and add a comment to other user blogs.  
 
+  Here are some images of what to expect.  
+
+  Homepage:  
+  <img src="public/assets/homepage.png" alt="homepage" width="400" />  
+
+  Signup:  
+  <img src="public/assets/signup.png" alt="signup" width="400" />  
+
+  User Dashboard:  
+  <img src="public/assets/userDashboard.png" alt="userDashboard" width="400" />     
+
+  View Comments:  
+  <img src="public/assets/viewComment.png" alt="homepage" width="400" />  
+  
   ## License
   This project is licensed under the **[MIT](./LICENSE)** license.
 

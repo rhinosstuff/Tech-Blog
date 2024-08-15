@@ -17,11 +17,11 @@
       </div>
 
       {{!-- display blog button bar  --}}
-      <div class="blog-btn-options d-none mt-2 ms-5" data-id="{{blog.id}}">
-        <button class="edit-blog-btn btn me-2" data-id="{{blog.id}}">Edit</button>
-        <button class="del-blog-btn btn me-2" data-id="{{blog.id}}">Delete</button>
+      <div class="blog-btn-options d-none mt-2 mx-5" data-id="{{blog.id}}">
+        <button class="edit-blog-btn btn" data-id="{{blog.id}}">Edit</button>
+        <button class="del-blog-btn btn" data-id="{{blog.id}}">Delete</button>
         {{#if (has_comments blog.id ../comments)}}
-          <button class="view-comments-btn btn btn-secondary" data-id="{{blog.id}}">View Comments</button>
+          <button class="view-comments-btn btn btn-secondary" data-id="{{blog.id}}">Comments</button>
         {{/if}}
       </div>
     </div>
